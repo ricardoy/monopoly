@@ -62,7 +62,7 @@ def run_simulation(min_sell, max_sell, min_rent, max_rent):
 
     print('\nVitórias por tipo')
     for pt in PLAYERS_TYPE:
-        print('{}: {:.2f}'.format(pt.label(), wins_by_player[pt] / TOTAL_SIMULATIONS * 100))
+        print('{}: {:.2f}%'.format(pt.label(), wins_by_player[pt] / TOTAL_SIMULATIONS * 100))
 
     max_number_of_wins = max(wins_by_player.values())
     most_wins_players = [player.label() for player, wins in wins_by_player.items() if wins == max_number_of_wins]
@@ -72,10 +72,10 @@ def run_simulation(min_sell, max_sell, min_rent, max_rent):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('Monopoly Simulation')
-    parser.add_argument('--min-sell', help='Minimum sell value', type=int, default=50)
-    parser.add_argument('--max-sell', help='Maximum sell value', type=int, default=90)
-    parser.add_argument('--min-rent', help='Minimum rent value', type=int, default=100)
-    parser.add_argument('--max-rent', help='Maximum rent value', type=int, default=250)
+    parser.add_argument('--min-sell', help='Minimum sell value', type=int, default=100)
+    parser.add_argument('--max-sell', help='Maximum sell value', type=int, default=250)
+    parser.add_argument('--min-rent', help='Minimum rent value', type=int, default=50)
+    parser.add_argument('--max-rent', help='Maximum rent value', type=int, default=90)
 
     args = parser.parse_args()
 
