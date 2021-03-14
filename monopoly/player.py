@@ -9,6 +9,9 @@ class AbstractPlayer(ABC):
         self.balance = INITIAL_BALANCE
         self.properties = set()
 
+    def remove_property(self, property):
+        self.properties.remove(property)
+
     def should_buy(self, property_value) -> bool:
         """
 

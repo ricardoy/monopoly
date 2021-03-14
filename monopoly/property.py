@@ -8,4 +8,6 @@ class Property:
         return self.owner is not None
 
     def evict_owner(self):
+        if self.owner is not None:
+            self.owner.remove_property(self)
         self.owner = None

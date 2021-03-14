@@ -44,7 +44,26 @@ class GameTest(TestCase):
                     dice=AlwaysRollOneDice(),
                     board=board)
 
-        game.run_game()
+        game.process_turn() # first player buys the property and his balance becomes 0
+        game.process_turn() # second player must play the rent and loses the game
 
         self.assertEqual(p1, game.winner())
+
+    def test_removed_player_loses_all_properties(self):
+        p1 = ImpulsivePlayer()
+        p2 = ImpulsivePlayer()
+        board = [Property(sell_value=1, rent_value=1), Property(sell_value=2, rent_value=2)]
+        game = Game(players=[p1, p2],
+                    dice=AlwaysRollOneDice(),
+                    board=board)
+
+        p1.add_property(board[0])
+        board[0].owner = p1
+        p1.add_property(board[1])
+        board[1].owner = p1
+
+        game._remove_player(p1)
+        self.assertTrue(len(p1.properties) == 0)
+        self.assertIsNone(board[0].owner)
+        self.assertIsNone(board[1].owner)
 

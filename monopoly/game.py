@@ -20,6 +20,11 @@ class Game:
     def _update_current_player(self):
         self.current_player = (self.current_player + 1) % len(self.players)
 
+    def _remove_player(self, player: AbstractPlayer):
+        for property in [p for p in player.properties]:
+            property.evict_owner()
+        self.players = [p for p in self.players if not p.is_balance_negative()]
+
     def process_turn(self) -> None:
         """
 
@@ -39,9 +44,7 @@ class Game:
                 value_to_pay = player.pay_and_update_balance(current_property.rent_value)
                 current_property.owner.add_to_balance(value_to_pay)
                 if player.is_balance_negative():
-                    for property in player.properties:
-                        property.evict_owner()
-                    self.players = [player for player in self.players if not player.is_balance_negative()]
+                    self._remove_player(player)
         else:
             if player.should_buy(current_property.sell_value):
                 player.add_property(current_property)
